@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>TEST</category>
+  <title>saveModels</title>
+  <description>To save h5 files. </description>
+  <contributor>Laura Pascal</contributor>
+
+  <parameters>
+    <label>Input parameters</label>
+    <description><![CDATA[Input parameters]]></description>
+
+    <integer>
+        <name>groupnumber</name>
+        <label>Group Number</label>
+        <longflag>--groupnumber</longflag>
+        <flag>g</flag>
+        <description><![CDATA[The number of the group]]></description>
+    </integer>
+
+    <geometry fileExtensions=".vtk" multiple="true" >
+        <name>vtkfilelist</name>
+        <label>VTK File List</label>
+        <longflag>--vtkfilelist</longflag>
+        <flag>-v</flag>
+        <description><![CDATA[.vtk Input files]]></description>
+    </geometry>
+
+    <directory>
+      <name>resultdir</name>
+      <label>Result Directory</label>
+      <longflag>--resultdir</longflag>
+      <flag>-d</flag>
+      <description><![CDATA[Directory where the result will be saved]]></description>
+    </directory>
+
+  </parameters>
+</executable>
