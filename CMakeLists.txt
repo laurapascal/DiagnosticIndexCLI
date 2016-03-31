@@ -7,3 +7,9 @@ option(saveModel "saveModel executable" ON)
 if (saveModel)
   add_subdirectory(saveModel)
 endif ()
+
+# computeShapeOALoads: Compute of shape loads of a sample for the current shape model 
+option(computeShapeOALoads "computeShapeOALoads executable" ON)
+if (computeShapeOALoads)
+add_subdirectory(computeShapeOALoads)
+endif ()
