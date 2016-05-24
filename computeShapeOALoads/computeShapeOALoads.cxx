@@ -16,6 +16,13 @@ int main(int argc, char ** argv)
 {
     PARSE_ARGS;
 
+    if(argc < 9)
+    {
+        std::cout << "Usage " << argv[0] << " [--groupnumber <int>] [--modelfile <std::string>] [--vtkfile <std::string>] [--resultdir <std::string>]" << std::endl;
+        return 1;
+    }
+
+
     // Load h5 file
     RepresenterType* representer = RepresenterType::Create();
     boost::scoped_ptr<StatisticalModelType> model(StatisticalModelType::Load(representer, modelfile));
@@ -29,7 +36,6 @@ int main(int argc, char ** argv)
 
     // Compute shape loads for current training model
     VectorType ShapeOAVectorLoads = model->ComputeCoefficientsForDataset(VTKShape);
-    std::cout<<ShapeOAVectorLoads.size()<<std::endl;
 
     // Store the shape loads in a csv file
     ofstream myfile;
@@ -41,6 +47,8 @@ int main(int argc, char ** argv)
         myfile << ShapeOAVectorLoads[i] << std::endl;
     }
     myfile.close();
+    std::cout << "Successfully saved shape model as " << "ShapeOAVectorLoadsG" << groupnumber << ".csv" << std::endl;
+
 
     return 0;
 }
