@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>TEST</category>
+  <title>computeMean</title>
+  <description>To compute mean from a HDF5 file.</description>
+  <contributor>Laura Pascal</contributor>
+
+  <parameters>
+    <label>Input parameters</label>
+    <description><![CDATA[Input parameters]]></description>
+
+    <integer>
+        <name>groupnumber</name>
+        <label>Group Number</label>
+        <longflag>--groupnumber</longflag>
+        <flag>g</flag>
+        <description><![CDATA[The number of the group]]></description>
+    </integer>
+
+    <geometry fileExtensions=".h5" multiple="false" >
+        <name>modelname</name>
+        <label>Shape model</label>
+        <longflag>--modelname</longflag>
+        <flag>-m</flag>
+        <description><![CDATA[.h5 Input files]]></description>
+    </geometry>
+
+    <directory>
+      <name>resultdir</name>
+      <label>Result Directory</label>
+      <longflag>--resultdir</longflag>
+      <flag>-d</flag>
+      <description><![CDATA[Directory where the result will be saved]]></description>
+    </directory>
+
+  </parameters>
+</executable>

@@ -11,5 +11,11 @@ endif ()
 # computeShapeOALoads: Compute of shape loads of a sample for the current shape model 
 option(computeShapeOALoads "computeShapeOALoads executable" ON)
 if (computeShapeOALoads)
-add_subdirectory(computeShapeOALoads)
+  add_subdirectory(computeShapeOALoads)
+endif ()
+
+# computeMean: Compute the mean from a HDF5 file 
+option(computeMean "computeMean executable" ON)
+if (computeMean)
+  add_subdirectory(computeMean)
 endif ()
