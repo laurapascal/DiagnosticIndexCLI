@@ -16,6 +16,53 @@ typedef DataManager<vtkPolyData> DataManagerType;
 typedef PCAModelBuilder<vtkPolyData> ModelBuilderType;
 typedef StatisticalModel<vtkPolyData> StatisticalModelType;
 
+vtkSmartPointer<vtkPolyData> moveToOrigin(vtkSmartPointer<vtkPolyData> mesh)
+{
+    // Sum up Original Points
+    double sum[3];
+    sum[0] = 0;
+    sum[1] = 0;
+    sum[2] = 0;
+
+    for (int i = 0; i < mesh->GetNumberOfPoints(); i++)
+    {
+        double curPoint[3];
+        mesh->GetPoint(i, curPoint);
+        for( unsigned int dim = 0; dim < 3; dim++ )
+        {
+            sum[dim] += curPoint[dim];
+
+        }
+    }
+
+    //Calculate MC
+    double MC[3];
+    for( unsigned int dim = 0; dim < 3; dim++ )
+    {
+        MC[dim] = (double) sum[dim] / (mesh->GetNumberOfPoints() + 1);
+    }
+
+    // Create a New Point Set "sftpoints" with the Shifted Values
+    vtkSmartPointer<vtkPoints> sftpoints = vtkSmartPointer<vtkPoints>::New();
+    sftpoints = mesh->GetPoints();
+
+    for( int pointID = 0; pointID < mesh->GetNumberOfPoints(); pointID++ )
+    {
+        double curPoint[3];
+        mesh->GetPoint(pointID, curPoint);
+        double sftPoint[3];
+        for( unsigned int dim = 0; dim < 3; dim++ )
+        {
+            sftPoint[dim] = curPoint[dim] - MC[dim];
+        }
+        sftpoints->SetPoint(pointID, sftPoint);
+    }
+    // Set the Shifted Points back to original mesh
+    mesh->SetPoints(sftpoints);
+
+    return mesh;
+}
+
 vtkSmartPointer<vtkPolyData> loadVTKPolyData(const std::string& filename) {
     vtkSmartPointer<vtkPolyDataReader> reader = vtkSmartPointer<vtkPolyDataReader>::New();
     reader->SetFileName(filename.c_str());
@@ -38,7 +85,7 @@ int main(int argc, char ** argv)
     // Average of all the VTK meshes
     //   Mean of the 3 coordinates
     vtkSmartPointer<vtkPolyData> polydata0 = loadVTKPolyData(vtkfilelist[0]);
-    int numPts = loadVTKPolyData(vtkfilelist[0])->GetPoints()->GetNumberOfPoints();
+    int numPts = polydata0->GetPoints()->GetNumberOfPoints();
     vtkSmartPointer<vtkCellArray> verts = polydata0->GetVerts();
     vtkSmartPointer<vtkCellArray> lines = polydata0->GetLines();
     vtkSmartPointer<vtkCellArray> polys = polydata0->GetPolys();
@@ -50,11 +97,14 @@ int main(int argc, char ** argv)
     for(int meshID = 1; meshID < vtkfilelist.size(); meshID++)
     {
         vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
+
         polydata = loadVTKPolyData(vtkfilelist[meshID]);
+        vtkSmartPointer<vtkPolyData> polydataMovedToOrigin = moveToOrigin(polydata);
+
         for(int ptID = 0; ptID < numPts; ptID++)
         {
             double coord[3];
-            polydata->GetPoint(ptID, coord);
+            polydataMovedToOrigin->GetPoint(ptID, coord);
             double sum[3];
             points->GetPoint(ptID, sum);
             for(int dim = 0; dim < 3; dim++)
