@@ -18,9 +18,9 @@
     </integer>
 
     <geometry fileExtensions=".h5" multiple="false" >
-        <name>modelname</name>
+        <name>shapemodel</name>
         <label>Shape model</label>
-        <longflag>--modelname</longflag>
+        <longflag>--shapemodel</longflag>
         <flag>-m</flag>
         <description><![CDATA[.h5 Input files]]></description>
     </geometry>

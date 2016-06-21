@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 
     if(argc < 7)
     {
-        std::cout << "Usage " << argv[0] << " [--groupnumber <int>] [--modelname <std::string>] [--resultdir <std::string>] " << std::endl;
+        std::cout << "Usage " << argv[0] << " [--groupnumber <int>] [--shapemodel <std::string>] [--resultdir <std::string>] " << std::endl;
         return 1;
     }
     
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
     typedef StatisticalModel<vtkPolyData> StatisticalModelType;
 
     RepresenterType* representer = RepresenterType::Create();
-    boost::scoped_ptr<StatisticalModelType> model(StatisticalModelType::Load(representer, modelname));
+    boost::scoped_ptr<StatisticalModelType> model(StatisticalModelType::Load(representer, shapemodel));
 
     // Get the model mean
     vtkPolyData* mean = model->DrawMean();

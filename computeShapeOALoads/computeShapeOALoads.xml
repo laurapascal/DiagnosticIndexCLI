@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <executable>
-  <category>TEST</category>
   <title>loadModels</title>
-  <description>To load h5 file. </description>
+  <description>To compute shape models. </description>
   <contributor>Laura Pascal</contributor>
 
   <parameters>
@@ -18,9 +17,9 @@
     </integer>
 
     <geometry fileExtensions=".h5" multiple="false" >
-        <name>modelfile</name>
+        <name>shapemodel</name>
         <label>Model File</label>
-        <longflag>--modelfile</longflag>
+        <longflag>--shapemodel</longflag>
         <flag>-m</flag>
         <description><![CDATA[.h5 Input file]]></description>
     </geometry>
